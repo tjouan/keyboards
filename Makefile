@@ -1,7 +1,7 @@
-ARDUINO_DIR		= /usr/local/arduino
-ARDMK_DIR		= /usr/local/arduino-mk
-ARDUINO_PORT		= /dev/cuaU0
+ARDUINO_DIR		= $(HOME)/usr/arduino/arduino-1.6.7
+AVR_TOOLS_PATH		= /usr/local/bin
+ARDUINO_PORT		= /dev/cuaU1
 BOARD_TAG		= uno
 ARDUINO_SKETCHBOOK	= .
 
-include /usr/local/arduino-mk/Arduino.mk
+include $(HOME)/src/hw/Arduino-Makefile/Arduino.mk
