@@ -26,8 +26,8 @@ CPPFLAGS    = %W[
   -Wall -ffunction-sections -fdata-sections -Os -fno-exceptions
 ].freeze
 LDFLAGS     = %w[-mmcu=atmega328p -Wl,--gc-sections -Os]
-# FIXME: remove hardcoded libcore (built with arduino-mk for now)
-LIBS        = %w[libcore.a -lc -lm].freeze
+# FIXME: build arduino libcore from arduino sources
+LIBS        = %w[vendor/libcore.a -lc -lm].freeze
 PORT        = ENV.fetch 'PORT'
 
 OBJ_TO_SRC = proc do |t|
