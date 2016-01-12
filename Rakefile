@@ -58,6 +58,6 @@ desc 'Build the hex file'
 task build: HEX_FILE
 
 desc 'Install program on USB board'
-task install: :build do
-  sh "avrdude -V -p atmega328p -D -c arduino -P /dev/cuaU1 -U flash:w:#{HEX_FILE}:i"
+task :install, [:port] => :build do |_, args|
+  sh "avrdude -V -p atmega328p -D -c arduino -P #{args.port} -U flash:w:#{HEX_FILE}:i"
 end
