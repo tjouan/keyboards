@@ -28,7 +28,6 @@ CPPFLAGS    = %W[
 LDFLAGS     = %w[-mmcu=atmega328p -Wl,--gc-sections -Os]
 # FIXME: remove hardcoded libcore (built with arduino-mk for now)
 LIBS        = %w[libcore.a -lc -lm].freeze
-AVRDUDE_CF  = "#{ARDUINO_DIR}/hardware/tools/avr/etc/avrdude.conf"
 
 OBJ_TO_SRC = proc do |t|
   t.pathmap("%{^#{BUILD_DIR},#{SRC_DIR}}X.cpp")
@@ -60,5 +59,5 @@ task build: HEX_FILE
 
 desc 'Install program on USB board'
 task install: :build do
-  sh "avrdude -V -p atmega328p -C #{AVRDUDE_CF} -D -c arduino -b 115200 -P /dev/cuaU1 -U flash:w:#{HEX_FILE}:i"
+  sh "avrdude -V -p atmega328p -D -c arduino -b 115200 -P /dev/cuaU1 -U flash:w:#{HEX_FILE}:i"
 end
