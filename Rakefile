@@ -53,7 +53,7 @@ end
 
 
 task default: :build
-#task all: %i[build install]
+task all: %i[build install]
 
 desc 'Build the hex file'
 task build: HEX_FILE
