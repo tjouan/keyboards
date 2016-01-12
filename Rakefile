@@ -36,7 +36,7 @@ end
 CLEAN.include "#{BUILD_DIR}/*"
 
 
-file HEX_FILE => [ELF_FILE] do |t|
+file HEX_FILE => ELF_FILE do |t|
   sh "#{SIZE} #{ELF_FILE}"
   sh "#{OBJCOPY} -O ihex -R .eeprom #{ELF_FILE} #{t.name}"
 end
