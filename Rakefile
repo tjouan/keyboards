@@ -28,7 +28,7 @@ CPPFLAGS    = %W[
 LDFLAGS     = %w[-mmcu=atmega328p -Wl,--gc-sections -Os]
 # FIXME: build arduino libcore from arduino sources
 LIBS        = %w[vendor/libcore.a -lc -lm].freeze
-PORT        = ENV.fetch 'PORT'
+PORT        = ENV.fetch 'PORT', '/dev/cuaU1'
 
 OBJ_TO_SRC = proc do |t|
   t.pathmap("%{^#{BUILD_DIR},#{SRC_DIR}}X.cpp")
