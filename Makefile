@@ -4,6 +4,6 @@ AVR_TOOLS_PATH		= /usr/local/bin
 ARDUINO_PORT		= /dev/cuaU1
 BOARD_TAG		= uno
 ARDUINO_SKETCHBOOK	= .
-USER_LIB_PATH           = lib
+USER_LIB_PATH		= lib
 
 include $(HOME)/src/hw/Arduino-Makefile/Arduino.mk
