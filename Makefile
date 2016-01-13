@@ -5,6 +5,7 @@ ARDUINO_PORT		= /dev/cuaU1
 BOARD_TAG		= micro
 ARDUINO_SKETCHBOOK	= .
 USER_LIB_PATH		= lib
+CPPFLAGS		= -Iinclude
 CXXFLAGS		= -std=c++11
 
 ARDUINO_LIBS = HID

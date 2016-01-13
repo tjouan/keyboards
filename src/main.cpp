@@ -1,15 +1,10 @@
 #include "Arduino.h"
 #include "HID.h"
 #include "Keyboard.h"
-
-__extension__ typedef int __guard __attribute__((mode (__DI__)));
-
-extern "C" int __cxa_guard_acquire(__guard *);
-extern "C" void __cxa_guard_release (__guard *);
-
-int __cxa_guard_acquire(__guard *g) {return !*(char *)(g);};
-void __cxa_guard_release (__guard *g) {*(char *)g = 1;};
-
+// FIXME: arduino-mk does not allow to change the linker, and use avr-gcc
+// instead of avr-g++.
+// Using `-fno-threadsafe-statics' link option as workaround does not work.
+#include "arduino_mk-linker_workarounds.h"
 
 #define VERSION               "0.0.1"
 #define SERIAL_SPEED          115200
