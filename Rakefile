@@ -3,7 +3,7 @@ require 'rake/clean'
 ARDUINO_DIR = "#{ENV['HOME']}/usr/arduino/arduino-1.6.7".freeze
 BUILD_DIR   = 'build'.freeze
 SRC_DIR     = 'src'.freeze
-SRCS        = FileList['src/*.cpp']
+SRCS        = FileList["#{SRC_DIR}/*.cpp"]
 OBJS        = SRCS.pathmap("%{^#{SRC_DIR},#{BUILD_DIR}}X.o")
 ELF_FILE    = "#{BUILD_DIR}/main.elf".freeze
 HEX_FILE    = "#{BUILD_DIR}/main.hex".freeze
