@@ -1,34 +1,34 @@
 require 'rake/clean'
 
-ARDUINO_DIR = "#{ENV['HOME']}/usr/arduino/arduino-1.6.7".freeze
-BUILD_DIR   = 'build'.freeze
-SRC_DIR     = 'src'.freeze
-SRCS        = FileList["#{SRC_DIR}/*.cpp"]
-OBJS        = SRCS.pathmap("%{^#{SRC_DIR},#{BUILD_DIR}}X.o")
-ELF_FILE    = "#{BUILD_DIR}/main.elf".freeze
-HEX_FILE    = "#{BUILD_DIR}/main.hex".freeze
-CC          = "avr-gcc".freeze
-CXX         = "avr-g++".freeze
-OBJCOPY     = "avr-objcopy".freeze
-SIZE        = "avr-size".freeze
-OPTIONS     = %w[
+ARDUINO_DIR   = "#{ENV['HOME']}/usr/arduino/arduino-1.6.7".freeze
+BUILD_DIR     = 'build'.freeze
+SRC_DIR       = 'src'.freeze
+SRCS          = FileList["#{SRC_DIR}/*.cpp"]
+OBJS          = SRCS.pathmap("%{^#{SRC_DIR},#{BUILD_DIR}}X.o")
+ELF_FILE      = "#{BUILD_DIR}/main.elf".freeze
+HEX_FILE      = "#{BUILD_DIR}/main.hex".freeze
+CC            = "avr-gcc".freeze
+CXX           = "avr-g++".freeze
+OBJCOPY       = "avr-objcopy".freeze
+SIZE          = "avr-size".freeze
+OPTIONS       = %w[
   -DF_CPU=16000000L
   -DARDUINO=167
   -DARDUINO_ARCH_AVR
   -D__PROG_TYPES_COMPAT__
 ].freeze
-INCLUDES    = %W[
+INCLUDES      = %W[
   -I#{ARDUINO_DIR}/hardware/arduino/avr/cores/arduino
   -I#{ARDUINO_DIR}/hardware/arduino/avr/variants/standard
 ]
-CPPFLAGS    = %W[
+CPPFLAGS      = %W[
   -MMD -mmcu=atmega328p
   -Wall -ffunction-sections -fdata-sections -Os -fno-exceptions
 ].freeze
-LDFLAGS     = %w[-mmcu=atmega328p -Wl,--gc-sections -Os]
+LDFLAGS       = %w[-mmcu=atmega328p -Wl,--gc-sections -Os]
 # FIXME: build arduino libcore from arduino sources
-LIBS        = %w[vendor/libcore.a -lc -lm].freeze
-PORT        = ENV.fetch 'PORT', '/dev/cuaU1'
+LIBS          = %w[vendor/libcore.a -lc -lm].freeze
+PORT          = ENV.fetch 'PORT', '/dev/cuaU1'
 
 OBJ_TO_SRC = proc do |t|
   t.pathmap("%{^#{BUILD_DIR},#{SRC_DIR}}X.cpp")
