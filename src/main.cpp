@@ -17,4 +17,5 @@ void setup() {
 
 void loop() {
   Keyboard.print("t");
+  delay(2000);
 }
