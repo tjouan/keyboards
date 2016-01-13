@@ -1,4 +1,6 @@
 #include "Arduino.h"
+#include "HID.h"
+#include "Keyboard.h"
 
 __extension__ typedef int __guard __attribute__((mode (__DI__)));
 
@@ -9,15 +11,10 @@ int __cxa_guard_acquire(__guard *g) {return !*(char *)(g);};
 void __cxa_guard_release (__guard *g) {*(char *)g = 1;};
 
 
-const int led_pin = 13;
-
 void setup() {
-  pinMode(led_pin, OUTPUT);
+  Keyboard.begin();
 }
 
 void loop() {
-  digitalWrite(led_pin, HIGH);
-  delay(125);
-  digitalWrite(led_pin, LOW);
-  delay(125);
+  Keyboard.print("t");
 }
