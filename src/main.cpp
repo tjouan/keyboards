@@ -15,6 +15,11 @@
 #define ROWS_COUNT            2
 #define COLS_COUNT            2
 
+int keymap[2][2] = {
+  {'j', 'k'},
+  {'l', ';'}
+};
+
 
 void setup() {
   pinMode(INPUT_ROW_0, INPUT);
@@ -34,10 +39,10 @@ void loop() {
 
     for (ir = 0; ir < ROWS_COUNT; ir += 1) {
       if (digitalRead(INPUT_ROW_0 + ir)) {
-        Keyboard.press('t');
+        Keyboard.press(keymap[ir][ic]);
       }
       else {
-        Keyboard.release('t');
+        Keyboard.release(keymap[ir][ic]);
       }
     }
 
