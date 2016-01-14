@@ -1,5 +1,4 @@
 #include "Arduino.h"
-#include "HID.h"
 #include "Keyboard.h"
 // FIXME: arduino-mk does not allow to change the linker, and use avr-gcc
 // instead of avr-g++.
