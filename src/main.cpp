@@ -35,7 +35,10 @@ void loop() {
 
     for (ir = 0; ir < ROWS_COUNT; ir += 1) {
       if (digitalRead(INPUT_ROW_0 + ir)) {
-        Keyboard.print("t");
+        Keyboard.press('t');
+      }
+      else {
+        Keyboard.release('t');
       }
     }
 
