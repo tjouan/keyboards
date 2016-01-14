@@ -48,6 +48,4 @@ void loop() {
 
     digitalWrite(OUTPUT_COL_0 + ic, LOW);
   }
-
-  delay(8);
 }
