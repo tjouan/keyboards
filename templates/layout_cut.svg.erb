@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 <%= @layout.width %> <%= @layout.height %>">
+
+  <rect
+    x="0" y="0"
+    width="<%= @layout.width %>" height="<%= @layout.height %>"
+    fill="none" stroke="black"
+  />
+
+  <%- @layout.cuts.each do |cut| -%>
+  <rect
+    x="<%= cut.x %>" y="<%= cut.y %>"
+    width="<%= cut.width %>" height="<%= cut.height %>"
+    fill="none" stroke="black"
+  />
+  <%- end -%>
+
+</svg>
