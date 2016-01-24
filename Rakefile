@@ -1,4 +1,5 @@
 require 'rake/clean'
+require 'keyboards'
 
 BUILD_DIR     = 'build'.freeze
 PORT          = ENV.fetch 'PORT', '/dev/cuaU1'
@@ -17,6 +18,7 @@ SRCS          = FileList["#{SRC_DIR}/*.cpp"]
 OBJS          = SRCS.pathmap("%{^#{SRC_DIR},#{BUILD_DIR}}X.o")
 ELF_FILE      = "#{BUILD_DIR}/main.elf".freeze
 HEX_FILE      = "#{BUILD_DIR}/main.hex".freeze
+LAYOUT_CUT    = "#{BUILD_DIR}/layout_cut.svg".freeze
 
 CC            = "avr-gcc".freeze
 CXX           = "avr-g++".freeze
@@ -69,6 +71,16 @@ file ELF_FILE => OBJS do |t|
   sh "#{CC} #{LDFLAGS.join ' '} -o #{t.name} #{t.prerequisites.join ' '} #{LIBS.join ' '}"
 end
 
+file LAYOUT_CUT do |t|
+  layout = Keyboards::Layout::CutLayout.new
+  File.open t.name, ?w do |f|
+    f.write Keyboards::Template.render(
+      t.name.sub("#{BUILD_DIR}/", ''),
+      layout: layout
+    )
+  end
+end
+
 rule '.o' => OBJ_TO_SRC do |t|
   args = [*CPPFLAGS, *OPTIONS, *INCLUDES]
   if t.source.pathmap('%x') == '.c'
@@ -90,3 +102,6 @@ desc 'Install program on USB board'
 task install: :build do
   sh "avrdude -V -p atmega328p -D -c arduino -P #{PORT} -U flash:w:#{HEX_FILE}:i"
 end
+
+desc 'Build the layout cutting template'
+task layout: LAYOUT_CUT
