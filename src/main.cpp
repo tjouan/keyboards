@@ -5,6 +5,8 @@
 // Using `-fno-threadsafe-statics' link option as workaround does not work.
 // https://github.com/arduino/Arduino/commit/37ee800abdfc4b602083ef35f942d4f46917433a
 #include "arduino_mk-linker_workarounds.h"
+#include "asciimap.h"
+
 
 #define VERSION               "0.0.1"
 #define SERIAL_SPEED          115200
@@ -48,6 +50,49 @@ int keymap[6][14] = {
     0, 0, KEY_PAGE_DOWN, KEY_END, KEY_RIGHT_ALT, KEY_RIGHT_CTRL, 0}
 };
 
+KeyReport report          = { 0 };
+KeyReport report_compare  = { 0 };
+
+void key_press(int key);
+void report_key_add(int key);
+void report_key_remove(int key);
+
+
+int is_printable(int key) {
+  if (asciimap[key]) {
+    return true;
+  }
+
+  return false;
+}
+
+void key_press(int key) {
+  if (is_printable(key)) {
+    report_key_add(asciimap[key]);
+  }
+  else {
+    report_key_add(key);
+  }
+}
+
+void key_release(int key) {
+  if (is_printable(key)) {
+    report_key_remove(asciimap[key]);
+  }
+  else {
+    report_key_remove(key);
+  }
+}
+
+void report_key_add(int key) {
+  report.keys[0] = key;
+}
+
+void report_key_remove(int key) {
+  if (report.keys[0] == key)
+    report.keys[0] = 0;
+}
+
 
 void setup() {
   pinMode(INPUT_ROW_0, INPUT);
@@ -85,12 +130,19 @@ void loop() {
       if (!keymap[ir][ic])
         continue;
 
-      if (digitalRead(INPUT_ROW_0 + ir))
-        Keyboard.press(keymap[ir][ic]);
-      else
-        Keyboard.release(keymap[ir][ic]);
+      if (digitalRead(INPUT_ROW_0 + ir)) {
+        key_press(keymap[ir][ic]);
+      }
+      else {
+        key_release(keymap[ir][ic]);
+      }
     }
 
     digitalWrite(OUTPUT_COL_00 + ic, LOW);
   }
+
+  if (report.keys[0] != report_compare.keys[0]) {
+    Keyboard.sendReport(&report);
+  }
+  report_compare.keys[0] = report.keys[0];
 }
