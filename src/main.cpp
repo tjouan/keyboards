@@ -37,7 +37,7 @@ int keymap[6][14] = {
   {KEY_TAB, '\'', ',', '.', 'p', 'y', 0,
     'f', 'g', 'c', 'r', 'l', '/', '='},
   {0, 'a', 'o', 'e', 'u', 'i', KEY_RETURN,
-    'd', 'h', 't', 'n', 's', 0, 0},
+    'd', 'h', 't', 'n', 's', '-', 0},
   {KEY_LEFT_GUI, ';', 'q', 'j', 'k', 'x', 0,
     'b', 'm', 'w', 'v', 'z', '\\', KEY_RIGHT_GUI},
   {0, KEY_ESC, 0, 0, KEY_INSERT, KEY_DELETE, ' ',
