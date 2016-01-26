@@ -11,4 +11,4 @@ CXXFLAGS		= -std=c++11
 ARDUINO_LIBS = HID
 ARDUINO_LIBS += Keyboard
 
-include $(HOME)/src/hw/Arduino-Makefile/Arduino.mk
+include $(HOME)/src/firmwares/Arduino-Makefile/Arduino.mk
