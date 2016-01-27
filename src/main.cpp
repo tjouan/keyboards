@@ -56,6 +56,8 @@ KeyReport report_compare  = { 0 };
 void key_press(int key);
 void report_key_add(int key);
 void report_key_remove(int key);
+void report_modifier_add(int key);
+void report_modifier_remove(int key);
 
 
 int is_printable(int key) {
@@ -66,8 +68,19 @@ int is_printable(int key) {
   return false;
 }
 
+int is_modifier(int key) {
+  if (key >= KEY_LEFT_CTRL && key <= KEY_RIGHT_GUI) {
+    return true;
+  }
+
+  return false;
+}
+
 void key_press(int key) {
-  if (is_printable(key)) {
+  if (is_modifier(key)) {
+    report_modifier_add(key);
+  }
+  else if (is_printable(key)) {
     report_key_add(asciimap[key]);
   }
   else {
@@ -76,7 +89,10 @@ void key_press(int key) {
 }
 
 void key_release(int key) {
-  if (is_printable(key)) {
+  if (is_modifier(key)) {
+    report_modifier_remove(key);
+  }
+  else if (is_printable(key)) {
     report_key_remove(asciimap[key]);
   }
   else {
@@ -93,6 +109,13 @@ void report_key_remove(int key) {
     report.keys[0] = 0;
 }
 
+void report_modifier_add(int key) {
+  report.modifiers |= (1 << (key - 128));
+}
+
+void report_modifier_remove(int key) {
+  report.modifiers &= ~(1 << (key - 128));
+}
 
 void setup() {
   pinMode(INPUT_ROW_0, INPUT);
@@ -141,8 +164,10 @@ void loop() {
     digitalWrite(OUTPUT_COL_00 + ic, LOW);
   }
 
-  if (report.keys[0] != report_compare.keys[0]) {
+  if (report.keys[0] != report_compare.keys[0] ||
+      report.modifiers != report_compare.modifiers) {
     Keyboard.sendReport(&report);
   }
   report_compare.keys[0] = report.keys[0];
+  report_compare.modifiers = report.modifiers;
 }
