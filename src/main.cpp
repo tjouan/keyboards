@@ -8,8 +8,6 @@
 #include "ascii_to_dvorak.h"
 
 
-#define VERSION               "0.0.1"
-#define SERIAL_SPEED          115200
 #define INPUT_ROW_START       A0
 #define OUTPUT_COL_START      0
 #define ROWS_COUNT            6
