@@ -168,6 +168,5 @@ void loop() {
       report.modifiers != report_compare.modifiers) {
     Keyboard.sendReport(&report);
   }
-  report_compare.keys[0] = report.keys[0];
-  report_compare.modifiers = report.modifiers;
+  report_compare = report;
 }
