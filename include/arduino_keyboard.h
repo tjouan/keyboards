@@ -50,7 +50,7 @@
 #define KEY_BACKSPACE     0xb2
 #define KEY_TAB           0xb3
 #define KEY_RETURN        0xb0
-#define KEY_ESC           0xb1
+#define KEY_ESC           0x29
 #define KEY_INSERT        0xd1
 #define KEY_DELETE        0xd4
 #define KEY_PAGE_UP       0xd3
