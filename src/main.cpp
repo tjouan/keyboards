@@ -58,6 +58,23 @@ void report_modifier_remove(int key) {
   report.modifiers &= ~(1 << (key - 128));
 }
 
+int report_compare() {
+  if (report.keys[0] != report_reference.keys[0])
+    return 1;
+
+  if (report.modifiers != report_reference.modifiers)
+    return 1;
+
+  return 0;
+}
+
+void report_update() {
+  if (report_compare() != 0)
+    Keyboard.sendReport(&report);
+
+  report_reference = report;
+}
+
 void setup() {
   for (int ir = 0; ir < ROWS_COUNT; ir += 1) {
     pinMode(INPUT_ROW_START + ir, INPUT);
@@ -92,9 +109,5 @@ void loop() {
     digitalWrite(OUTPUT_COL_START + ic, LOW);
   }
 
-  if (report.keys[0] != report_compare.keys[0] ||
-      report.modifiers != report_compare.modifiers) {
-    Keyboard.sendReport(&report);
-  }
-  report_compare = report;
+  report_update();
 }

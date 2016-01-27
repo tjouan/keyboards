@@ -29,8 +29,8 @@ int keymap[6][14] = {
     0, 0, KEY_PAGE_DOWN, KEY_END, KEY_RIGHT_ALT, KEY_RIGHT_CTRL, 0}
 };
 
-KeyReport report          = { 0 };
-KeyReport report_compare  = { 0 };
+KeyReport report            = { 0 };
+KeyReport report_reference  = { 0 };
 
 
 int is_printable(int key);
@@ -43,3 +43,5 @@ void report_key_add(int key);
 void report_key_remove(int key);
 void report_modifier_add(int key);
 void report_modifier_remove(int key);
+int report_compare();
+void report_update();
