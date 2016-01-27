@@ -5,7 +5,7 @@
 // Using `-fno-threadsafe-statics' link option as workaround does not work.
 // https://github.com/arduino/Arduino/commit/37ee800abdfc4b602083ef35f942d4f46917433a
 #include "arduino_mk-linker_workarounds.h"
-#include "asciimap.h"
+#include "ascii_to_dvorak.h"
 
 
 #define VERSION               "0.0.1"
