@@ -31,6 +31,8 @@
 #define ROWS_COUNT            6
 #define COLS_COUNT            14
 
+#define KEY_ESC               0x29
+
 int keymap[6][14] = {
   {'`', '1', '2', '3', '4', '5', '\b',
     '6', '7', '8', '9', '0', '[', ']'},
