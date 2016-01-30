@@ -13,6 +13,7 @@
 #define OUTPUT_COL_START      0
 #define ROWS_COUNT            6
 #define COLS_COUNT            14
+#define KEYS_STATE_MAX        6
 
 int keymap[6][14] = {
   {'`', '1', '2', '3', '4', '5', '\b',
@@ -39,6 +40,7 @@ int is_modifier(int key);
 void key_press(int key);
 void key_release(int key);
 
+uint8_t *report_key_chr(int key);
 void report_key_add(int key);
 void report_key_remove(int key);
 void report_modifier_add(int key);

@@ -41,13 +41,23 @@ void key_release(int key) {
   }
 }
 
+uint8_t *report_key_chr(int key) {
+  return (uint8_t *) memchr(report.keys, key, KEYS_STATE_MAX);
+}
+
 void report_key_add(int key) {
-  report.keys[0] = key;
+  uint8_t *b;
+
+  if (report_key_chr(key) == NULL)
+    if ((b = report_key_chr(0)))
+      *b = key;
 }
 
 void report_key_remove(int key) {
-  if (report.keys[0] == key)
-    report.keys[0] = 0;
+  uint8_t *b;
+
+  if ((b = report_key_chr(key)) != NULL)
+    memmove(b, b + 1, KEYS_STATE_MAX - (b - report.keys));
 }
 
 void report_modifier_add(int key) {
@@ -59,7 +69,7 @@ void report_modifier_remove(int key) {
 }
 
 int report_compare() {
-  if (report.keys[0] != report_reference.keys[0])
+  if (memcmp(report.keys, report_reference.keys, KEYS_STATE_MAX) != 0)
     return 1;
 
   if (report.modifiers != report_reference.modifiers)
