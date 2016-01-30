@@ -2,43 +2,35 @@
 
 
 int is_printable(int key) {
-  if (asciimap[key]) {
+  if (asciimap[key])
     return true;
-  }
 
   return false;
 }
 
 int is_modifier(int key) {
-  if (key >= KEY_LEFT_CTRL && key <= KEY_RIGHT_GUI) {
+  if (key >= KEY_LEFT_CTRL && key <= KEY_RIGHT_GUI)
     return true;
-  }
 
   return false;
 }
 
 void key_press(int key) {
-  if (is_modifier(key)) {
+  if (is_modifier(key))
     report_modifier_add(key);
-  }
-  else if (is_printable(key)) {
+  else if (is_printable(key))
     report_key_add(asciimap[key]);
-  }
-  else {
+  else
     report_key_add(key);
-  }
 }
 
 void key_release(int key) {
-  if (is_modifier(key)) {
+  if (is_modifier(key))
     report_modifier_remove(key);
-  }
-  else if (is_printable(key)) {
+  else if (is_printable(key))
     report_key_remove(asciimap[key]);
-  }
-  else {
+  else
     report_key_remove(key);
-  }
 }
 
 uint8_t *report_key_chr(int key) {
@@ -86,13 +78,11 @@ void report_update() {
 }
 
 void setup() {
-  for (int ir = 0; ir < ROWS_COUNT; ir += 1) {
+  for (int ir = 0; ir < ROWS_COUNT; ir += 1)
     pinMode(INPUT_ROW_START + ir, INPUT);
-  }
 
-  for (int ic = 0; ic < COLS_COUNT; ic += 1) {
+  for (int ic = 0; ic < COLS_COUNT; ic += 1)
     pinMode(OUTPUT_COL_START + ic, OUTPUT);
-  }
 
   Keyboard.begin();
 }
@@ -108,12 +98,10 @@ void loop() {
       if (!keymap[ir][ic])
         continue;
 
-      if (digitalRead(INPUT_ROW_START + ir)) {
+      if (digitalRead(INPUT_ROW_START + ir))
         key_press(keymap[ir][ic]);
-      }
-      else {
+      else
         key_release(keymap[ir][ic]);
-      }
     }
 
     digitalWrite(OUTPUT_COL_START + ic, LOW);
