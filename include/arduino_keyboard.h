@@ -53,8 +53,8 @@
 #define KEY_ESC           0x29
 #define KEY_INSERT        0xd1
 #define KEY_DELETE        0xd4
-#define KEY_PAGE_UP       0xd3
-#define KEY_PAGE_DOWN     0xd6
+#define KEY_PAGE_UP       0x4b
+#define KEY_PAGE_DOWN     0x4e
 #define KEY_HOME          0xd2
 #define KEY_END           0xd5
 #define KEY_CAPS_LOCK     0xc1
