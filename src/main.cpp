@@ -2,10 +2,7 @@
 
 
 int is_printable(int key) {
-  if (key > 128)
-    return false;
-
-  if (asciimap[key])
+  if (key < 128 && asciimap[key])
     return true;
 
   return false;
