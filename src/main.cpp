@@ -79,10 +79,10 @@ void report_update() {
 
 void setup() {
   for (int ir = 0; ir < ROWS_COUNT; ir += 1)
-    pinMode(INPUT_ROW_START + ir, INPUT);
+    pinMode(rows_pins[ir], INPUT);
 
   for (int ic = 0; ic < COLS_COUNT; ic += 1)
-    pinMode(OUTPUT_COL_START + ic, OUTPUT);
+    pinMode(cols_pins[ic], OUTPUT);
 
   Keyboard.begin();
 }
@@ -92,19 +92,19 @@ void loop() {
   int ic = 0;
 
   for (ic = 0; ic < COLS_COUNT; ic += 1) {
-    digitalWrite(OUTPUT_COL_START + ic, HIGH);
+    digitalWrite(cols_pins[ic], HIGH);
 
     for (ir = 0; ir < ROWS_COUNT; ir += 1) {
       if (!keymap[ir][ic])
         continue;
 
-      if (digitalRead(INPUT_ROW_START + ir))
+      if (digitalRead(rows_pins[ir]))
         key_press(keymap[ir][ic]);
       else
         key_release(keymap[ir][ic]);
     }
 
-    digitalWrite(OUTPUT_COL_START + ic, LOW);
+    digitalWrite(cols_pins[ic], LOW);
   }
 
   report_update();

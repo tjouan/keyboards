@@ -9,13 +9,18 @@
 #include "ascii_to_dvorak.h"
 
 
-#define INPUT_ROW_START       A0
-#define OUTPUT_COL_START      0
 #define ROWS_COUNT            6
 #define COLS_COUNT            14
 #define KEYS_STATE_MAX        6
 
-int keymap[6][14] = {
+const uint8_t rows_pins[ROWS_COUNT] = {
+  A5, A4, A3, A2, A1, A0
+};
+const uint8_t cols_pins[COLS_COUNT] = {
+  0, 1, 13, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
+};
+
+int keymap[ROWS_COUNT][COLS_COUNT] = {
   {'`', '1', '2', '3', '4', '5', '\b',
     '6', '7', '8', '9', '0', '[', ']'},
   {'\t', '\'', ',', '.', 'p', 'y', 0,
