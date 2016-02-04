@@ -7,8 +7,7 @@ ARDUINO_SKETCHBOOK	= .
 USER_LIB_PATH		= lib
 CPPFLAGS		= -Iinclude
 CXXFLAGS		= -std=c++11
-
-ARDUINO_LIBS = HID
-ARDUINO_LIBS += Keyboard
+ARDUINO_LIBS		= HID
+ARDUINO_LIBS		+= Keyboard
 
 include $(HOME)/src/firmwares/Arduino-Makefile/Arduino.mk
