@@ -78,19 +78,16 @@ void report_update() {
 }
 
 void setup() {
-  for (int ir = 0; ir < ROWS_COUNT; ir += 1)
+  for (ir = 0; ir < ROWS_COUNT; ir += 1)
     pinMode(rows_pins[ir], INPUT);
 
-  for (int ic = 0; ic < COLS_COUNT; ic += 1)
+  for (ic = 0; ic < COLS_COUNT; ic += 1)
     pinMode(cols_pins[ic], OUTPUT);
 
   Keyboard.begin();
 }
 
 void loop() {
-  int ir = 0;
-  int ic = 0;
-
   for (ic = 0; ic < COLS_COUNT; ic += 1) {
     digitalWrite(cols_pins[ic], HIGH);
 

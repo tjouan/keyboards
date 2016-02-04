@@ -38,6 +38,8 @@ int keymap[ROWS_COUNT][COLS_COUNT] = {
 KeyReport report            = { 0 };
 KeyReport report_reference  = { 0 };
 
+int ir, ic;
+
 
 int is_printable(int key);
 int is_modifier(int key);
