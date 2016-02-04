@@ -77,17 +77,7 @@ void report_update() {
   report_reference = report;
 }
 
-void setup() {
-  for (ir = 0; ir < ROWS_COUNT; ir += 1)
-    pinMode(rows_pins[ir], INPUT);
-
-  for (ic = 0; ic < COLS_COUNT; ic += 1)
-    pinMode(cols_pins[ic], OUTPUT);
-
-  Keyboard.begin();
-}
-
-void loop() {
+void scan() {
   for (ic = 0; ic < COLS_COUNT; ic += 1) {
     digitalWrite(cols_pins[ic], HIGH);
 
@@ -103,6 +93,19 @@ void loop() {
 
     digitalWrite(cols_pins[ic], LOW);
   }
+}
 
+void setup() {
+  for (ir = 0; ir < ROWS_COUNT; ir += 1)
+    pinMode(rows_pins[ir], INPUT);
+
+  for (ic = 0; ic < COLS_COUNT; ic += 1)
+    pinMode(cols_pins[ic], OUTPUT);
+
+  Keyboard.begin();
+}
+
+void loop() {
+  scan();
   report_update();
 }

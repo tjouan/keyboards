@@ -54,3 +54,4 @@ void report_modifier_add(int key);
 void report_modifier_remove(int key);
 int report_compare();
 void report_update();
+void scan();
