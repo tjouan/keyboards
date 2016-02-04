@@ -6,7 +6,11 @@
 #include "arduino_mk-linker_workarounds.h"
 #include "arduino_keyboard.h"
 
+#ifdef KEYMAP_DVORAK
 #include "ascii_to_dvorak.h"
+#else
+#include "ascii_to_qwerty.h"
+#endif
 
 
 #define ROWS_COUNT            6
