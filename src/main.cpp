@@ -1,6 +1,17 @@
 #include "keyboards.h"
 
 
+int is_function_active() {
+  return function_active;
+}
+
+int is_function_key(int key) {
+  if (key == KEY_FUNCTION)
+    return true;
+
+  return false;
+}
+
 int is_printable(int key) {
   if (key < 128 && asciimap[key])
     return true;
@@ -15,19 +26,39 @@ int is_modifier(int key) {
   return false;
 }
 
+void function_activate() {
+  if (is_function_active())
+    return;
+
+  function_active = true;
+  report = { 0 };
+}
+
+void function_deactivate() {
+  if (!is_function_active())
+    return;
+
+  function_active = false;
+  report = { 0 };
+}
+
 void key_press(int key) {
+  if (is_function_key(key))
+    function_activate();
   if (is_modifier(key))
     report_modifier_add(key);
-  else if (is_printable(key))
+  else if (is_printable(key) && !is_function_active())
     report_key_add(asciimap[key]);
   else
     report_key_add(key);
 }
 
 void key_release(int key) {
+  if (is_function_key(key))
+    function_active = 0;
   if (is_modifier(key))
     report_modifier_remove(key);
-  else if (is_printable(key))
+  else if (is_printable(key) && !is_function_active())
     report_key_remove(asciimap[key]);
   else
     report_key_remove(key);
@@ -82,20 +113,29 @@ void scan() {
     digitalWrite(cols_pins[ic], HIGH);
 
     for (ir = 0; ir < ROWS_COUNT; ir += 1) {
-      if (!keymap[ir][ic])
+      if (!scan_cell(ir, ic))
         continue;
 
       if (digitalRead(rows_pins[ir]))
-        key_press(keymap[ir][ic]);
+        key_press(scan_cell(ir, ic));
       else
-        key_release(keymap[ir][ic]);
+        key_release(scan_cell(ir, ic));
     }
 
     digitalWrite(cols_pins[ic], LOW);
   }
 }
 
+int scan_cell(int row, int col) {
+  if (is_function_active())
+    return keymap_function[row][col];
+
+  return keymap[row][col];
+}
+
 void setup() {
+  function_deactivate();
+
   for (ir = 0; ir < ROWS_COUNT; ir += 1)
     pinMode(rows_pins[ir], INPUT);
 
