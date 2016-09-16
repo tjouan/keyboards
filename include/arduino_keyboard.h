@@ -58,18 +58,18 @@
 #define KEY_HOME          0x4a
 #define KEY_END           0x4d
 #define KEY_CAPS_LOCK     0xc1
-#define KEY_F1            0xc2
-#define KEY_F2            0xc3
-#define KEY_F3            0xc4
-#define KEY_F4            0xc5
-#define KEY_F5            0xc6
-#define KEY_F6            0xc7
-#define KEY_F7            0xc8
-#define KEY_F8            0xc9
-#define KEY_F9            0xca
-#define KEY_F10           0xcb
-#define KEY_F11           0xcc
-#define KEY_F12           0xcd
+#define KEY_F1            0x3a
+#define KEY_F2            0x3b
+#define KEY_F3            0x3c
+#define KEY_F4            0x3d
+#define KEY_F5            0x3e
+#define KEY_F6            0x3f
+#define KEY_F7            0x40
+#define KEY_F8            0x41
+#define KEY_F9            0x42
+#define KEY_F10           0x43
+#define KEY_F11           0x44
+#define KEY_F12           0x45
 
 //  Low level key report: up to 6 keys and shift, ctrl etc at once
 typedef struct
