@@ -32,6 +32,7 @@ OPTIONS       = %w[
   -D__PROG_TYPES_COMPAT__
 ].freeze
 INCLUDES      = %W[
+  -Iinclude
   -I#{ARDUINO_DIR}/hardware/arduino/avr/cores/arduino
   -I#{ARDUINO_DIR}/hardware/arduino/avr/variants/standard
 ]
@@ -55,8 +56,10 @@ OBJ_TO_SRC = proc do |t|
   end
 end
 
-CLEAN.include "#{BUILD_DIR}/*", "#{BUILD_DIR}/core/*"
+CLEAN.include BUILD_DIR
 
+
+directory BUILD_DIR
 
 file CORE => CORE_OBJS do |t|
   sh "#{AR} rcs #{t.name} #{t.sources.join ' '}"
@@ -81,7 +84,8 @@ file LAYOUT_CUT do |t|
   end
 end
 
-rule '.o' => OBJ_TO_SRC do |t|
+rule '.o' => [OBJ_TO_SRC, BUILD_DIR] do |t|
+  mkdir_p t.name.pathmap '%d'
   args = [*CPPFLAGS, *OPTIONS, *INCLUDES]
   if t.source.pathmap('%x') == '.c'
     sh "#{CC} #{args.join ' '} #{t.source} -c -o #{t.name}"
@@ -92,14 +96,14 @@ rule '.o' => OBJ_TO_SRC do |t|
 end
 
 
-task default: :build
-task all: %i[build install]
+task default: :hex
+task all: %i[hex install]
 
 desc 'Build the hex file'
-task build: [CORE, HEX_FILE]
+task hex: [CORE, HEX_FILE]
 
 desc 'Install program on USB board'
-task install: :build do
+task install: :hex do
   sh "avrdude -V -p atmega328p -D -c arduino -P #{PORT} -U flash:w:#{HEX_FILE}:i"
 end
 
