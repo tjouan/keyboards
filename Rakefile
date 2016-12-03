@@ -22,8 +22,6 @@ task default: :hex
 EmbedUtils::RakeTask.new do |t|
   t.board       = :micro
   t.libraries   += %w[HID Keyboard]
-
-  t.arduino_dir = File.expand_path('~/usr/arduino/arduino-1.6.7')
 end
 
 desc 'Build the layout cutting template'
