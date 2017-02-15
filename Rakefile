@@ -20,8 +20,8 @@ end
 task default: :hex
 
 EmbedUtils::RakeTask.new do |t|
-  t.board       = :micro
-  t.libraries   += %w[HID Keyboard]
+  t.board     = :micro
+  t.libraries += %w[HID Keyboard]
 end
 
 desc 'Build the layout cutting template'
