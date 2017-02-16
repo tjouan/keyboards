@@ -22,6 +22,7 @@ task default: :hex
 EmbedUtils::RakeTask.new do |t|
   t.board     = :micro
   t.libraries += %w[HID Keyboard]
+  t.options   << "-Iinclude/#{ENV.fetch 'KEYBOARD', 'ukbd63l-mk1'}"
 end
 
 desc 'Build the layout cutting template'
