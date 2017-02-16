@@ -109,6 +109,8 @@ void report_update() {
 }
 
 void scan() {
+  int scan_state = 0;
+
   for (ic = 0; ic < COLS_COUNT; ic += 1) {
     digitalWrite(cols_pins[ic], HIGH);
 
@@ -116,7 +118,12 @@ void scan() {
       if (!scan_cell(ir, ic))
         continue;
 
-      if (digitalRead(rows_pins[ir]))
+      scan_state = digitalRead(rows_pins[ir]);
+#ifdef DEBUG_SERIAL
+      sprintf(serial_buf, "SCANNING %d,%d state: %d", ic, ir, scan_state);
+      Serial.println(serial_buf);
+#endif
+      if (scan_state)
         key_press(scan_cell(ir, ic));
       else
         key_release(scan_cell(ir, ic));
@@ -143,6 +150,9 @@ void setup() {
     pinMode(cols_pins[ic], OUTPUT);
 
   Keyboard.begin();
+#ifdef DEBUG_SERIAL
+  Serial.begin(SERIAL_SPEED);
+#endif
 }
 
 void loop() {

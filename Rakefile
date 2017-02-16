@@ -23,6 +23,7 @@ EmbedUtils::RakeTask.new do |t|
   t.board     = :micro
   t.libraries += %w[HID Keyboard]
   t.options   << "-Iinclude/#{ENV.fetch 'KEYBOARD', 'ukbd63l-mk1'}"
+  t.options   << "-DDEBUG_SERIAL" if ENV.key? 'DEBUG'
 end
 
 desc 'Build the layout cutting template'

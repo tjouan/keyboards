@@ -3,6 +3,7 @@
 #include "arduino_keyboard.h"
 #include "keyboard_layout.h"
 
+#define SERIAL_SPEED 115200
 
 KeyReport report            = { 0 };
 KeyReport report_reference  = { 0 };
@@ -10,6 +11,10 @@ KeyReport report_reference  = { 0 };
 int ir, ic;
 
 int function_active;
+
+#ifdef DEBUG_SERIAL
+  char serial_buf[80];
+#endif
 
 
 int is_function_active();
