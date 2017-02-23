@@ -128,14 +128,15 @@ void scan() {
       #else
         scan_state = digitalRead(rows_pins[ir]);
       #endif
-#ifdef DEBUG_SERIAL
-      sprintf(serial_buf, "SCANNING %d,%d state: %d", ic, ir, scan_state);
-      Serial.println(serial_buf);
-#endif
-      if (scan_state)
-        key_press(scan_cell(ir, ic));
-      else
-        key_release(scan_cell(ir, ic));
+      #ifdef UKBD_DEBUG_SERIAL
+        sprintf(serial_buf, "SCANNING %d,%d state: %d", ic, ir, scan_state);
+        Serial.println(serial_buf);
+      #else
+        if (scan_state)
+          key_press(scan_cell(ir, ic));
+        else
+          key_release(scan_cell(ir, ic));
+      #endif
     }
 
     #ifdef UKBD_INPUT_PULLUP
@@ -173,9 +174,9 @@ void setup() {
   }
 
   Keyboard.begin();
-#ifdef DEBUG_SERIAL
-  Serial.begin(SERIAL_SPEED);
-#endif
+  #ifdef UKBD_DEBUG_SERIAL
+    Serial.begin(SERIAL_SPEED);
+  #endif
 }
 
 void loop() {
