@@ -112,13 +112,22 @@ void scan() {
   int scan_state = 0;
 
   for (ic = 0; ic < COLS_COUNT; ic += 1) {
-    digitalWrite(cols_pins[ic], HIGH);
+    #ifdef UKBD_INPUT_PULLUP
+      pinMode(cols_pins[ic], OUTPUT);
+      digitalWrite(cols_pins[ic], LOW);
+    #else
+      digitalWrite(cols_pins[ic], HIGH);
+    #endif
 
     for (ir = 0; ir < ROWS_COUNT; ir += 1) {
       if (!scan_cell(ir, ic))
         continue;
 
-      scan_state = digitalRead(rows_pins[ir]);
+      #ifdef UKBD_INPUT_PULLUP
+        scan_state = digitalRead(rows_pins[ir]) == LOW;
+      #else
+        scan_state = digitalRead(rows_pins[ir]);
+      #endif
 #ifdef DEBUG_SERIAL
       sprintf(serial_buf, "SCANNING %d,%d state: %d", ic, ir, scan_state);
       Serial.println(serial_buf);
@@ -129,7 +138,11 @@ void scan() {
         key_release(scan_cell(ir, ic));
     }
 
-    digitalWrite(cols_pins[ic], LOW);
+    #ifdef UKBD_INPUT_PULLUP
+      pinMode(cols_pins[ic], INPUT);
+    #else
+      digitalWrite(cols_pins[ic], LOW);
+    #endif
   }
 }
 
@@ -143,11 +156,21 @@ int scan_cell(int row, int col) {
 void setup() {
   function_deactivate();
 
-  for (ir = 0; ir < ROWS_COUNT; ir += 1)
-    pinMode(rows_pins[ir], INPUT);
+  for (ir = 0; ir < ROWS_COUNT; ir += 1) {
+    #ifdef UKBD_INPUT_PULLUP
+      pinMode(rows_pins[ir], INPUT_PULLUP);
+    #else
+      pinMode(rows_pins[ir], INPUT);
+    #endif
+  }
 
-  for (ic = 0; ic < COLS_COUNT; ic += 1)
-    pinMode(cols_pins[ic], OUTPUT);
+  for (ic = 0; ic < COLS_COUNT; ic += 1) {
+    #ifdef UKBD_INPUT_PULLUP
+      pinMode(cols_pins[ic], INPUT);
+    #else
+      pinMode(cols_pins[ic], OUTPUT);
+    #endif
+  }
 
   Keyboard.begin();
 #ifdef DEBUG_SERIAL
