@@ -19,6 +19,7 @@ end
 
 task default: :hex
 
+# FIXME: build task should depend on configuration in headers too
 EmbedUtils::RakeTask.new do |t|
   t.board     = :micro
   t.libraries += %w[HID Keyboard]
