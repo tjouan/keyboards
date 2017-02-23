@@ -12,7 +12,7 @@ int ir, ic;
 
 int function_active;
 
-#ifdef DEBUG_SERIAL
+#ifdef UKBD_DEBUG_SERIAL
   char serial_buf[80];
 #endif
 
