@@ -1,0 +1,46 @@
+sudo: required
+dist: trusty
+language: c
+addons:
+  apt:
+    packages:
+      - texinfo
+notifications:
+  email:
+    - tj+travis_keyboards@a13.fr
+  on_success: never
+
+cache:
+  directories:
+    - ${HOME}/.gem/travis
+    - ${HOME}/usr
+  timeout: 3600
+
+before_install:
+  - sudo apt-get --purge remove ruby\*
+  - rm -rf ~/.bash*
+  - unset gem GEM_HOME GEM_PATH RUBYOPT IRBRC
+  - export PATH=/bin:/usr/bin RB=$HOME/usr/bin/ruby CHECK=$HOME/usr/lib/libcheck.a
+  - test -x $RB || wget http://ftp.ruby-lang.org/pub/ruby/ruby-2.4-stable.tar.xz
+  - test -x $RB || tar xfJ ruby-*.tar.xz
+  - test -x $RB || cd ruby-*
+  - test -x $RB || ./configure --prefix=$HOME/usr --disable-install-doc --with-out-ext=tk
+  - test -x $RB || (make && make install)
+  - test -x $CHECK || cd /tmp
+  - test -x $CHECK || wget -O check-0.10.0.tar.gz https://github.com/libcheck/check/archive/0.10.0.tar.gz
+  - test -x $CHECK || tar xfz check-0.10.0.tar.gz
+  - test -x $CHECK || cd check-0.10.0
+  - test -x $CHECK || autoreconf --install
+  - test -x $CHECK || ./configure --prefix=$HOME/usr
+  - test -x $CHECK || (make && make install)
+
+install:
+  - unset gem GEM_HOME GEM_PATH RUBYOPT IRBRC
+  - export GEM_HOME=~/.gem/travis GEM_PATH=~/.gem/travis
+  - export PATH=$GEM_HOME/bin:$HOME/usr/bin:/bin:/usr/bin
+  - export LD_LIBRARY_PATH=${HOME}/usr/lib
+  - cd $TRAVIS_BUILD_DIR
+  - gem install rake embed_utils
+
+script:
+  - RUBYOPT=-Ilib UKBD_CHECK_LOC=${HOME}/usr rake
