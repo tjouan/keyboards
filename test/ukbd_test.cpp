@@ -35,11 +35,11 @@ int main(void) {
   srunner_free(sr);
 
   if (failures_count == 0) {
-    puts("\x1B[1;32mOK\x1B[0m");
+    puts("\x1B[1;32mPASS\x1B[0m");
     return EXIT_SUCCESS;
   }
   else {
-    puts("\x1B[1;31mERROR\x1B[0m");
+    puts("\x1B[1;31mFAIL\x1B[0m");
     return EXIT_FAILURE;
   }
 }
