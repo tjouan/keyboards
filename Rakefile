@@ -15,7 +15,7 @@ LAYOUT_CUT  = "#{BUILD_DIR}/layout_cut.svg".freeze
 
 
 file TEST_RUNNER => TEST_OBJS do |t|
-  sh "#{CXX} -L#{CHECK_LOC}/lib -lcheck -o #{t.name} #{t.prerequisites.join ' '}"
+  sh "#{CXX} -L#{CHECK_LOC}/lib -o #{t.name} #{t.prerequisites.join ' '} -lcheck"
 end
 
 rule /#{TEST_DIR}\/.+_test\.o$/ => [TEST_SRC, TEST_SOBJ, TEST_DIR] do |t|
