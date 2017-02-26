@@ -3,25 +3,27 @@ require 'embed_utils/rake_task'
 require 'keyboards'
 
 BUILD_DIR   = 'build'.freeze
+CXX         = 'c++'.freeze
 TEST_DIR    = "#{BUILD_DIR}/test".freeze
 TEST_RUNNER = "#{TEST_DIR}/run".freeze
 TEST_OBJS   = FileList['test/*_test.cpp'].pathmap "%{^test,#{TEST_DIR}}X.o"
 TEST_SRC    = -> t { t.pathmap "%{^#{TEST_DIR},test}X.cpp" }
 TEST_SOBJ   = -> t { t.sub '_test', '' }
 TEST_SSRC   = -> t { t.pathmap "%{^#{TEST_DIR},src}X.cpp" }
+CHECK_LOC   = ENV.fetch('UKBD_CHECK_LOC', '/usr/local').freeze
 LAYOUT_CUT  = "#{BUILD_DIR}/layout_cut.svg".freeze
 
 
 file TEST_RUNNER => TEST_OBJS do |t|
-  sh "c++ -L/usr/local/lib -lcheck -o #{t.name} #{t.prerequisites.join ' '}"
+  sh "#{CXX} -L#{CHECK_LOC}/lib -lcheck -o #{t.name} #{t.prerequisites.join ' '}"
 end
 
 rule /#{TEST_DIR}\/.+_test\.o$/ => [TEST_SRC, TEST_SOBJ, TEST_DIR] do |t|
-  sh "c++ -Iinclude -I/usr/local/include #{t.source} -c -o #{t.name}"
+  sh "#{CXX} -Iinclude -I#{CHECK_LOC}/include #{t.source} -c -o #{t.name}"
 end
 
 rule /#{TEST_DIR}\/.+\.o$/ => [TEST_SSRC, TEST_DIR] do |t|
-  sh "c++ -Iinclude #{t.source} -c -o #{t.name}"
+  sh "#{CXX} -Iinclude #{t.source} -c -o #{t.name}"
 end
 
 directory TEST_DIR
