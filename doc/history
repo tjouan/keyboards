@@ -1,0 +1,21 @@
+20170317 ukbd63l-mk1
+  * change microcontroller, wired following ukbd63l-mk2 matrix
+  * wire new diodes in opposite direction and remove pull-down resistors
+  * change keys: h t n s v ' "
+
+20170303 ukbd63l-mk2
+
+20161129 ukbd63l-mk1
+  * change keys: e r n y c
+
+20161104 ukbd63l-mk1
+  * change keys: m tab pgdn p l f i o 6 9 a n
+  * add internal borders on backplate
+
+20161013 ukbd63l-mk1
+  * change keys: d t sp lf c h
+  * block left ctrl switch
+
+20161012 ukbd63l-mk1
+  * change keys: g n alt shift r w bs pgup
+  * remove unused switches (bottom right area)
