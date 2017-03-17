@@ -1,7 +1,7 @@
 20170317 ukbd63l-mk1
   * change microcontroller, wired following ukbd63l-mk2 matrix
   * wire new diodes in opposite direction and remove pull-down resistors
-  * change keys: h t n s v ' "
+  * change keys: h t n s v ' " q ,
 
 20170303 ukbd63l-mk2
 
