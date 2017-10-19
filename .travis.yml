@@ -17,15 +17,8 @@ cache:
   timeout: 3600
 
 before_install:
-  - sudo apt-get --purge remove ruby\*
-  - rm -rf ~/.bash*
-  - unset gem GEM_HOME GEM_PATH RUBYOPT IRBRC
-  - export PATH=/bin:/usr/bin RB=$HOME/usr/bin/ruby CHECK=$HOME/usr/lib/libcheck.a
-  - test -x $RB || wget http://ftp.ruby-lang.org/pub/ruby/ruby-2.4-stable.tar.xz
-  - test -x $RB || tar xfJ ruby-*.tar.xz
-  - test -x $RB || cd ruby-*
-  - test -x $RB || ./configure --prefix=$HOME/usr --disable-install-doc --with-out-ext=tk
-  - test -x $RB || (make && make install)
+  - export CHECK=$HOME/usr/lib/libcheck.a
+  - . <(curl -ksS https://vault.a13.fr/dev/travis-utils/install-before.sh)
   - test -x $CHECK || cd /tmp
   - test -x $CHECK || wget -O check-0.10.0.tar.gz https://github.com/libcheck/check/archive/0.10.0.tar.gz
   - test -x $CHECK || tar xfz check-0.10.0.tar.gz
