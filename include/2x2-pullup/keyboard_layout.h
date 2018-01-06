@@ -5,6 +5,7 @@
 #define COLS_COUNT            2
 #define KEYS_STATE_MAX        6
 #define KEY_FUNCTION          0xe8
+#define UKBD_INPUT_PULLUP
 
 const uint8_t rows_pins[ROWS_COUNT] = {
   A1, A0
