@@ -28,7 +28,7 @@ end
 
 directory TEST_DIR
 
-file LAYOUT_CUT do |t|
+file LAYOUT_CUT => BUILD_DIR do |t|
   layout = Keyboards::Layout::CutLayout.new
   File.open t.name, ?w do |f|
     f.write Keyboards::Template.render(
