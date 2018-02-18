@@ -7,11 +7,17 @@
     fill="none" stroke="black"
   />
 
-  <%- @layout.cuts.each do |cut| -%>
+  <%- @layout.rects.each do |rect| -%>
   <rect
-    x="<%= cut.x %>" y="<%= cut.y %>"
-    width="<%= cut.width %>" height="<%= cut.height %>"
-    fill="none" stroke="black"
+    x="<%= rect.x %>" y="<%= rect.y %>"
+    width="<%= rect.width %>" height="<%= rect.height %>"
+    fill="none"
+    stroke="<%= rect.color %>"
+    stroke-linecap="butt"
+    stroke-linejoin="miter"
+    <%- unless %i[black red].include? rect.color -%>
+    stroke-dasharray="5, 5"
+    <%- end -%>
   />
   <%- end -%>
 
