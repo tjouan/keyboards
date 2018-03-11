@@ -29,7 +29,7 @@ end
 directory TEST_DIR
 
 file LAYOUT_CUT => BUILD_DIR do |t|
-  layout = Keyboards::Layout::CutLayout.new
+  layout = Keyboards::Layout.ukbd63l_mk2
   File.open t.name, ?w do |f|
     f.write Keyboards::Template.render(
       t.name.sub("#{BUILD_DIR}/", ''),
