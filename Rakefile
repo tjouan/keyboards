@@ -45,7 +45,7 @@ task default: :test
 EmbedUtils::RakeTask.new do |t|
   t.board     = :micro
   t.libraries += %w[HID Keyboard]
-  t.options   << "-Iinclude/#{ENV.fetch 'KEYBOARD', 'ukbd63l-mk1'}"
+  t.options   << "-Iinclude/#{ENV.fetch 'KEYBOARD', 'ukbd63l-mk2'}"
   t.options   << '-DUKBD_DEBUG_SERIAL' if ENV.key? 'DEBUG'
 end
 
