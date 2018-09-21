@@ -1,6 +1,6 @@
 sudo: required
 dist: trusty
-language: c
+language: minimal
 addons:
   apt:
     packages:
@@ -10,6 +10,8 @@ notifications:
     - tj+travis_keyboards@a13.fr
   on_success: never
 
+env:
+  - RUBYVER=2.5-stable
 cache:
   directories:
     - ${HOME}/.gem/travis
